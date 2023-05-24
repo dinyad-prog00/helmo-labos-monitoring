@@ -1,0 +1,18 @@
+type=PairWithWindow
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:  Stopped (.*)
+desc= $6 service stopped on $2 
+action=write /var/log/daemonstatus.log "%s"; write - $6 stopped;shellcmd /home/dinyad/Documents/sec/scripts/daemon.sh inactive "$2" "$6" "$1"
+ptype2=RegExp
+pattern2=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:  Started (.*)
+action2=write /var/log/sec/daemonstatus.log $6 service restarted on $2; write - $6 restarted;shellcmd /home/dinyad/Documents/sec/scripts/daemon.sh active "$2" "$6" "$1"
+desc2= $6 service started on $2
+window=30
+
+type=SingleWithScript
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:  Started (.*)
+desc=$0
+script=/home/dinyad/Documents/sec/scripts/daemon.sh active "$2" "$6" "$1"
+action=write daemon-history.txt $1 $6 started on host $2; write - $6 started v2
+

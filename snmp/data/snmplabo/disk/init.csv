@@ -1,0 +1,3 @@
+Physical memory,Virtual memory,Memory buffers,Cached memory,Shared memory,Swap space,/,/dev/shm,/run,/sys/fs/cgroup,/boot,/run/user/42,/run/user/1035,/run/media/admin/CentOS 7 x86_64,/run/user/1028
+1024,1024,1024,1024,1024,1024,4096,4096,4096,4096,4096,4096,4096,2048,4096
+4046680,8109908,4046680,1202276,203652,4063228,51123825,505835,505835,505835,259584,101167,101167,4245165,101167

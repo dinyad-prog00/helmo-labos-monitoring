@@ -1,0 +1,23 @@
+type=Single
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:  Accepted password for (\w+) from (\d+.\d+.\d+.\d+) port (\d+) ssh2
+desc=ssh from $7 to $2:$6
+action=create SSH$2 
+continue=TakeNext
+
+type=Single
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:  Accepted password for (\w+) from (\d+.\d+.\d+.\d+) port (\d+) ssh2
+desc=ssh from $7 to $2:$6
+context=SSH$7
+action=write /var/log/sec/cascade.log cascade $7 ->  $2:$6
+
+type=Single
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:  Disconnected from user (\w+) (\d+.\d+.\d+.\d+) port \d+
+context=SSH$2
+desc=ssh disconnect from $7 to $2:$6
+action=delete SSH$2
+
+
+

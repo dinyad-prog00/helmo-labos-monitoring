@@ -1,0 +1,7 @@
+type=SingleWithThreshold
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (?<dstip>\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:.* (?<srcip>\d+.\d+.\d+.\d+) port (\d+)
+desc=Port scan on $+{dstip} by $+{srcip}
+action=write /var/log/sec/scan.log  '%t %s'; shellcmd echo '%t %s' | mail -s "Ports scan" dinyad456@gmail.com 
+thresh=8
+window=120

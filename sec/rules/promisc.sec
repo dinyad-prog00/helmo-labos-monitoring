@@ -1,0 +1,5 @@
+type=Single
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:\s\[\d+.\d+\] device (\w+) entered promiscuous mode
+desc=device $6  entered promiscuous mode
+action=write /var/log/sec/promiscuous.log $1 Interface $6  entered promiscuous mode on host $2 ($5); shellcmd echo '$1 Interface $6  entered promiscuous mode on host $2 ($5)' | mail -s "Promiscouus" dinyad456@gmail.com 

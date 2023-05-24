@@ -1,0 +1,11 @@
+datetime;service;host;state
+
+May 20 13:30:51;ssh;192.168.0.125;active
+May 20 13:45:59;OpenBSD Secure Shell server.;192.168.0.208;active
+May 20 13:45:17;ssh.service - OpenBSD Secure Shell server.;192.168.0.125;inactive
+May 20 13:53:49;Network Manager Script Dispatcher Service.;192.168.0.208;active
+May 20 19:56:52;session-c13.scope - Session c13 of User lightdm.;127.0.0.1;active
+May 20 19:56:53;dbus.service - D-Bus User Message Bus.;127.0.0.1;active
+May 20 19:56:53;at-spi-dbus-bus.service - Accessibility services bus.;127.0.0.1;active
+May 20 19:56:53;gvfs-daemon.service - Virtual filesystem service.;127.0.0.1;active
+May 20 19:56:58;pulseaudio.service - Sound Service.;127.0.0.1;active

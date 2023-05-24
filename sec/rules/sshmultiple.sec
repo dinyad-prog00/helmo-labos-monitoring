@@ -1,0 +1,20 @@
+type=Single
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:  Accepted password for (\w+) from (\d+.\d+.\d+.\d+) port (\d+) ssh2
+context=!$7conTo$2
+desc=$7 s'est connecté sur $2
+action=create $7conTo$2
+
+type=Single
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:  Disconnected from user (\w+) (\d+.\d+.\d+.\d+) port \d+
+context=$7conTo$2
+desc=$7 s'est connecté sur $2
+action=delete $7conTo$2
+
+type=Single
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:  Accepted password for (\w+) from (\d+.\d+.\d+.\d+) port (\d+) ssh2
+context=$7conTo$2
+desc=$7 s'est connecté sur $2
+action=write - Double connexion ssh from $7 to $2;write /var/log/sshmultiple.log Double connexion ssh from $7 to $2; shellcmd echo 'Double connexion ssh from $7 to $2' | mail -s "Double connexion ssh" dinyad456@gmail.com

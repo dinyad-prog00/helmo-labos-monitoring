@@ -1,0 +1,6 @@
+type=SingleWithScript
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: authpriv, Priority: (\w+), Hostname: (\w+), Message: \s+(?<user>\w+).* TTY=.*PWD=(\S+).*USER=#(-1|4294967295)\s+;\s+COMMAND=(?<cmd>.+)
+desc=$0
+script=/home/dinyad/Documents/sec/scripts/faillesudo.sh $+{user} $+{cmd}
+action=write - faille sudo $+{user} $+{cmd}

@@ -1,0 +1,27 @@
+type=Single
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:  Accepted password for (\w+) from (\d+.\d+.\d+.\d+) port (\d+) ssh2
+desc=$0
+action=create SSHLOGIN$2$6
+
+type=Single
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:  Disconnected from user (\w+) (\d+.\d+.\d+.\d+) port \d+
+context=SSHLOGIN$2$6
+desc=$0
+action=delete SSHLOGIN$2$6
+
+
+
+type=EventGroup2
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (?<host>\d+.\d+.\d+.\d+), Facility: authpriv, Priority: (\w+), Hostname: (\w+), Message:.* session opened for user root\(uid=0\) by (?<user>\w+).*
+thresh=1
+ptype2=RegExp
+pattern2=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (?<host>\d+.\d+.\d+.\d+), Facility: authpriv, Priority: (\w+), Hostname: (\w+), Message: \s+(?<user>\w+).* TTY=.*PWD=(?<pwd>\S+).*USER=root.*COMMAND=(?<cmd>.+)
+thresh2=1
+context=SSHLOGIN$+{host}$+{user}
+desc=host : $+{host}, user : $+{user}
+multact=yes
+action=write /var/log/sec/sudouse.log  "%t" "%s" pwd  : $+{pwd}, cmd : $+{cmd};shellcmd echo '%t %s pwd  : $+{pwd}, cmd : $+{cmd}' | mail -s "Sudo use" dinyad456@gmail.com
+window=60

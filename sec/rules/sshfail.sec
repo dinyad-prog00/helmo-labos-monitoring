@@ -1,0 +1,32 @@
+type=SingleWithThreshold
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:  Failed password for (\w+) from (\d+.\d+.\d+.\d+) port (\d+) ssh2
+desc=failure for $6 from $7
+action=write /var/log/sec/sshfail.log  $1 ssh failure for $6 from $7; shellcmd echo '$1 ssh failure for $6 from $7' | mail -s "SSH failed" dinyad456@gmail.com 
+thresh=3
+window=300
+continue=TakeNext
+
+type=PairWithWindow
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:  Failed password for (\w+) from (\d+.\d+.\d+.\d+) port (\d+) ssh2
+desc=Dit not login within 1m $6 $7
+action=write /var/log/sec/sshfail.log "%s"
+ptype2=RegExp
+pattern2=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:  Accepted password for $6 from $7 port (\d+) ssh2
+desc2=su after fl for $6 $7
+action2=write /var/log/sec/sshfail.log login succes for %6 %7 block
+window=120
+
+type=PairWithWindow
+ptype=RegExp
+pattern=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:  Failed password for (\w+) from (\d+.\d+.\d+.\d+) port (\d+) ssh2
+desc=Dit not login within 1m $6 $7
+action=write /var/log/sec/sshfail.log $1 "%s"; shellcmd echo '$1 ssh failure for $6 from $7 (600)' | mail -s "SSH failed" dinyad456@gmail.com
+ptype2=RegExp
+pattern2=Time: (\w+ \d+ \d+:\d+:\d+), FromHost : (\d+.\d+.\d+.\d+), Facility: (\w+), Priority: (\w+), Hostname: (\w+), Message:  Accepted password for $6 from $7 port (\d+) ssh2
+desc2=su after fl for $6 $7
+action2=write /var/log/sec/sshfail.log  $1 Login succes for $6 from $7 after failed; shellcmd echo '$1 ssh failure for $6 from $7' | mail -s "Login Success" dinyad456@gmail.com 
+window=600
+
+
